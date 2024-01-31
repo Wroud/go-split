@@ -30,27 +30,43 @@ export function Pane(props: PaneProps) {
       if(patchedStyle.flexBasis === 'auto' && basis) {
         patchedStyle.flexBasis = basis;
       }
-    } 
+    }
     
-    if(state.split == 'vertical') {
-      if(state.minSize > 0) {
-        patchedStyle.minWidth = `${state.minSize}px`;
+    if (!state.disable) {
+      if(state.split == 'vertical') {
+        if(state.minSize > 0) {
+          patchedStyle.minWidth = `${state.minSize}px`;
+        }
+        if(state.maxSize > 0) {
+          patchedStyle.maxWidth = `${state.maxSize}px`;
+        }
+        if(state.maxSize < 0) {
+          patchedStyle.maxWidth = `calc(100% + ${state.maxSize}px)`;
+        }
+      } else {
+        if(state.minSize > 0) {
+          patchedStyle.minHeight = `${state.minSize}px`;
+        }
+        if(state.maxSize > 0) {
+          patchedStyle.maxHeight = `${state.maxSize}px`
+        }
+        if(state.maxSize < 0) {
+          patchedStyle.maxHeight = `calc(100% + ${state.maxSize}px)`;
+        }
       }
-      if(state.maxSize > 0) {
-        patchedStyle.maxWidth = `${state.maxSize}px`;
-      }
-      if(state.maxSize < 0) {
-        patchedStyle.maxWidth = `calc(100% + ${state.maxSize}px)`;
+    } else if (children) {
+      if (state.split == 'vertical') {
+        patchedStyle.maxWidth = '100%';
+      } else {
+        patchedStyle.maxHeight = '100%';
       }
     } else {
-      if(state.minSize > 0) {
-        patchedStyle.minHeight = `${state.minSize}px`;
-      }
-      if(state.maxSize > 0) {
-        patchedStyle.maxHeight = `${state.maxSize}px`
-      }
-      if(state.maxSize < 0) {
-        patchedStyle.maxHeight = `calc(100% + ${state.maxSize}px)`;
+      if (state.split == 'vertical') {
+        patchedStyle.maxWidth = '0px';
+        patchedStyle.minWidth = '0px';
+      } else {
+        patchedStyle.maxHeight = '0px';
+        patchedStyle.minHeight = '0px';
       }
     }
 
