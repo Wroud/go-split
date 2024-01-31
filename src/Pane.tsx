@@ -27,7 +27,12 @@ export function Pane(props: PaneProps) {
   
     if(main) {
       patchedStyle.flexBasis = state.getMainSizeStyle();
-      if(patchedStyle.flexBasis === 'auto' && basis) {
+      if(
+        (
+          patchedStyle.flexBasis === 'auto' || 
+          (patchedStyle.flexBasis === `${state.minSize}px` && state.mode === 'resize')
+        ) && 
+        basis) {
         patchedStyle.flexBasis = basis;
       }
     }
